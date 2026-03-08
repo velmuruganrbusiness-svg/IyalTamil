@@ -24,7 +24,7 @@ const WritePage: React.FC = () => {
       await api.createPost({
         title: title.trim(),
         content: content.trim(),
-        author: { id: 0, name: "Anonymous" },
+        author: { id: '0', name: "Anonymous" },
         category: "கவிதை"
       });
 
