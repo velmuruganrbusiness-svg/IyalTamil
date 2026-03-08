@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Remove logo background</title>
+  <style>
+    body { font-family: system-ui; max-width: 480px; margin: 2rem auto; padding: 0 1rem; }
+    h1 { font-size: 1.25rem; }
+    input[type="file"] { margin: 0.5rem 0; }
+    canvas { display: block; margin: 1rem 0; border: 1px solid #ccc; max-width: 100%; }
+    button { background: #5A7D5B; color: white; border: none; padding: 0.5rem 1rem; cursor: pointer; border-radius: 6px; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .hint { font-size: 0.875rem; color: #666; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Remove logo background</h1>
+  <p>Select your logo image. Light/cream background pixels will be made transparent. Replace <code>logo.png</code> with the downloaded file.</p>
+  <input type="file" id="file" accept="image/png,image/jpeg,image/webp" />
+  <div><button id="run" disabled>Remove background &amp; download</button></div>
+  <canvas id="c" style="display:none;"></canvas>
+  <p class="hint" id="hint"></p>
+
+  <script>
+    const file = document.getElementById('file');
+    const run = document.getElementById('run');
+    const canvas = document.getElementById('c');
+    const hint = document.getElementById('hint');
+
+    file.addEventListener('change', () => { run.disabled = !file.files.length; });
+
+    run.addEventListener('click', async () => {
+      if (!file.files.length) return;
+      const img = new Image();
+      img.onload = () => {
+        const w = img.width, h = img.height;
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        const d = ctx.getImageData(0, 0, w, h);
+        const data = d.data;
+
+        // Sample corner pixels (likely background) – light off‑white/cream
+        const sample = (x, y) => {
+          const i = (y * w + x) * 4;
+          return [data[i], data[i + 1], data[i + 2]];
+        };
+        const corners = [sample(0, 0), sample(w - 1, 0), sample(0, h - 1), sample(w - 1, h - 1)];
+        const avg = corners[0].map((_, i) => Math.round(corners.reduce((s, c) => s + c[i], 0) / 4));
+
+        const tol = 42;
+        const dist = (a, b) => Math.sqrt((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 + (a[2] - b[2]) ** 2);
+
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i], g = data[i + 1], b = data[i + 2];
+          if (dist([r, g, b], avg) < tol) data[i + 3] = 0;
+        }
+
+        ctx.putImageData(d, 0, 0);
+        canvas.toBlob(blob => {
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'logo-transparent.png';
+          a.click();
+          URL.revokeObjectURL(a.href);
+          hint.textContent = 'Downloaded logo-transparent.png. Replace public/images/logo.png with it.';
+        }, 'image/png');
+      };
+      img.src = URL.createObjectURL(file.files[0]);
+    });
+  </script>
+</body>
+</html>
