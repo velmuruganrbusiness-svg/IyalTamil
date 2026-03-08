@@ -1,5 +1,5 @@
 import type { Post, User } from '../types';
-
+/////// API Service for interacting with backend endpoints
 export interface CommentResponse {
   id: string;
   text: string;

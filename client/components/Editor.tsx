@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import type { Category, Post } from '../types';
 import { t, Language } from '../utils/translations';
@@ -7,7 +6,7 @@ import { Icon } from './Icon';
 import { Breadcrumbs } from './Breadcrumbs';
 
 interface EditorProps {
-  onSubmit: (post: Omit<Post, 'id' | 'author' | 'likes' | 'comments' | 'createdAt'>) => Promise<void>;
+  onSubmit: (post: Omit<Post, '_id' | 'author' | 'likes' | 'comments' | 'createdAt'>) => Promise<void>;
   language: Language;
   onNavigate: (page: 'home') => void;
 }

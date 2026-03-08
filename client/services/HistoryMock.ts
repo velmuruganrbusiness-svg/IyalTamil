@@ -1,10 +1,9 @@
-
 import type { Post } from '../types';
 import { authors } from './UsersMock';
 
 export const historyData: Post[] = [
   {
-    id: 80,
+    _id: "80",
     title: 'தஞ்சைப் பெரிய கோயில்',
     author: authors.kalki,
     category: 'வரலாறு',
@@ -16,7 +15,7 @@ export const historyData: Post[] = [
     createdAt: '2023-12-01T10:00:00Z',
   },
   {
-    id: 81,
+    _id: "81",
     title: 'கீழடி அகழ்வாராய்ச்சி',
     author: authors.sujatha,
     category: 'வரலாறு',
@@ -26,7 +25,7 @@ export const historyData: Post[] = [
     createdAt: '2023-12-02T11:30:00Z',
   },
   {
-    id: 82,
+    _id: "82",
     title: 'குமரிக்கண்டம்',
     author: authors.kiRa,
     category: 'வரலாறு',
@@ -36,7 +35,7 @@ export const historyData: Post[] = [
     createdAt: '2023-12-03T09:00:00Z',
   },
   {
-    id: 83,
+    _id: "83",
     title: 'கல்லணை - உலகின் பழமையான அணை',
     author: authors.arun,
     category: 'வரலாறு',
@@ -46,7 +45,7 @@ export const historyData: Post[] = [
     createdAt: '2023-12-04T14:15:00Z',
   },
   {
-    id: 84,
+    _id: "84",
     title: 'மதுரை மீனாட்சி அம்மன் கோயில்',
     author: authors.meena,
     category: 'வரலாறு',
@@ -56,7 +55,7 @@ export const historyData: Post[] = [
     createdAt: '2023-12-05T08:45:00Z',
   },
   {
-    id: 85,
+    _id: "85",
     title: 'திருவள்ளுவர் சிலை',
     author: authors.kalam,
     category: 'வரலாறு',
@@ -66,7 +65,7 @@ export const historyData: Post[] = [
     createdAt: '2023-12-06T13:20:00Z',
   },
   {
-    id: 86,
+    _id: "86",
     title: 'சிந்து சமவெளி நாகரிகம்',
     author: authors.raghavan,
     category: 'வரலாறு',
@@ -76,7 +75,7 @@ export const historyData: Post[] = [
     createdAt: '2023-12-07T16:00:00Z',
   },
   {
-    id: 87,
+    _id: "87",
     title: 'மகாகவி பாரதியார்',
     author: authors.senthil,
     category: 'வரலாறு',
@@ -86,7 +85,7 @@ export const historyData: Post[] = [
     createdAt: '2023-12-08T10:30:00Z',
   },
   {
-    id: 88,
+    _id: "88",
     title: 'ஐம்பெருங் காப்பியங்கள்',
     author: authors.muVaradharasanar,
     category: 'வரலாறு',
@@ -96,7 +95,7 @@ export const historyData: Post[] = [
     createdAt: '2023-12-09T11:10:00Z',
   },
   {
-    id: 89,
+    _id: "89",
     title: 'மாமல்லபுரம் சிற்பங்கள்',
     author: authors.anitha,
     category: 'வரலாறு',
