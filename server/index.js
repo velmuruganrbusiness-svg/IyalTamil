@@ -16,7 +16,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 
 // Enable CORS for specific origin
 app.use(cors({
-    origin: 'http://localhost:3000', // Replace with your frontend URL
+    origin: ['http://localhost:3000', 'https://www.iyaltamil.com', 'https://iyaltamil.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
