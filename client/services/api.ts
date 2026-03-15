@@ -170,5 +170,21 @@ export const api = {
       }
       throw error;
     }
-  }
+  },
+
+  // Fetch posts by the logged-in user
+  getMyPosts: async (userId: string): Promise<Post[]> => {
+    try {
+      const response = await fetch(`${API_URL}/posts/author/${userId}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch user posts');
+      }
+      return await response.json();
+    } catch (error: any) {
+      console.error("API getMyPosts Error:", error.message);
+      throw error;
+    }
+  },
 };

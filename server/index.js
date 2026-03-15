@@ -121,7 +121,8 @@ app.post('/api/comments', async (req, res) => {
     const { postId, text, author } = req.body;
     if (!postId || !text || !text.trim()) {
       return res.status(400).json({ message: "postId and text are required" });
-    }
+    } 
+   
     const comment = new Comment({
       postId,
       text: text.trim(),
@@ -170,6 +171,16 @@ app.post('/api/auth/login', async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ message: "Login failed" });
+  }
+});
+
+// Fetch posts by the logged-in user
+app.get('/api/posts/author/:userId', async (req, res) => {
+  try {
+    const posts = await Post.find({ 'author.id': req.params.userId }).lean();
+    res.json(posts);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching user posts", details: err.message });
   }
 });
 

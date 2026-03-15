@@ -234,6 +234,12 @@ const App: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (page === 'author' && currentUser) {
+      api.getMyPosts(String(currentUser.id)).then(setPosts).catch(console.error);
+    }
+  }, [page, currentUser]);
+
   return (
     <div className="min-h-screen flex flex-col transition-colors duration-500 bg-[#FDFBF7] dark:bg-stone-950 selection:bg-zen-green/20">
       <Header
