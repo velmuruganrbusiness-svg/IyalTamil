@@ -403,7 +403,7 @@ export const ClassicsView: React.FC<ClassicsViewProps> = ({ works, language, sel
 
   return (
     <div className="w-full max-w-7xl mx-auto pb-32 animate-subtle-fade">
-      <SEO title={`${t('classics', language)} | VetriZen`} />
+      <SEO title={`${t('classics', language)} | IyalTamil`} />
       
       {!selectedWorkId && (
         <div className="px-4">

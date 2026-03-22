@@ -39,7 +39,7 @@ export const Editor: React.FC<EditorProps> = ({ onSubmit, language, onNavigate }
 
   return (
     <div className="max-w-4xl mx-auto animate-subtle-fade pb-20">
-       <SEO title={`${t('submitYourWork', language)} | VetriZen`} />
+       <SEO title={`${t('submitYourWork', language)} | IyalTamil`} />
 
        <Breadcrumbs items={breadcrumbs} />
 

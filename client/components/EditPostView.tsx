@@ -95,7 +95,7 @@ export const EditPostView: React.FC<EditPostViewProps> = ({
 
   return (
     <div className="max-w-4xl mx-auto pt-4 pb-32 px-4 animate-subtle-fade bg-bone dark:bg-stone-950">
-      <SEO title={`${t('editCreation', language)}: ${post.title} | VetriZen`} />
+      <SEO title={`${t('editCreation', language)}: ${post.title} | IyalTamil`} />
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
         <Breadcrumbs items={breadcrumbs} />

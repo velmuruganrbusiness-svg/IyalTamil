@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    default: "VetriZen Reader"
+    default: "IyalTamil Reader"
   },
   createdAt: {
     type: Date,

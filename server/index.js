@@ -34,7 +34,7 @@ mongoose.connect(MONGODB_URI, {
 .then(() => {
   console.log("\n-------------------------------------------");
   console.log("✅ MongoDB Connected Successfully!");
-  console.log("🚀 VetriZen API is ready at http://localhost:" + PORT);
+  console.log("🚀 IyalTamil API is ready at http://localhost:" + PORT);
   console.log("-------------------------------------------\n");
 })
 .catch(err => {
@@ -48,7 +48,7 @@ mongoose.connect(MONGODB_URI, {
 
 // 1. Health Check
 app.get('/api/health', (req, res) => {
-  res.status(200).json({ status: 'online', message: 'VetriZen Server is healthy' });
+  res.status(200).json({ status: 'online', message: 'IyalTamil Server is healthy' });
 });
 
 // 2. Posts - Get All

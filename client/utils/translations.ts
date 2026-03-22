@@ -17,7 +17,7 @@ export const translations = {
   wordOfTheDay: { ta: 'இன்றைய சொல்', en: 'Word of the Day' },
   meaning: { ta: 'பொருள்', en: 'Meaning' },
   tagline: { ta: 'அமைதியில் ஒரு வெற்றி', en: 'Success in Simplicity' },
-  subTagline: { ta: 'எழுத்துக்களின் அமைதிப்பரப்பு - VetriZen', en: 'A Slow-Tech Sanctuary for Tamil Letters' },
+  subTagline: { ta: 'எழுத்துக்களின் அமைதிப்பரப்பு - IyalTamil', en: 'A Slow-Tech Sanctuary for Tamil Letters' },
   latestPosts: { ta: 'சமீபத்திய படைப்புகள்', en: 'Latest Works' },
   searchIn: { ta: '{category} இல் தேடுக', en: 'Search in {category}' },
   searchResultsFor: { ta: '{query} - தேடல் முடிவுகள்', en: 'Search results for {query}' },

@@ -55,8 +55,8 @@ export const LoginModal: React.FC<LoginModalProps> = ({ onClose, onLogin, langua
         </button>
         
         <div className="text-center mb-10">
-          <div className="w-20 h-20 mx-auto mb-6 flex items-center justify-center rounded-full overflow-hidden">
-             <img src="/images/logo.png" alt="VetriZen" className="w-full h-full object-cover object-center" />
+          <div className="w-28 h-28 mx-auto mb-6 flex items-center justify-center">
+             <img src="/images/logo.png" alt="IyalTamil" className="w-full h-full object-contain" />
           </div>
           <h2 className="text-3xl font-bold font-tamil mb-2 text-stone-900 dark:text-white">
             {isLogin ? t('loginRegister', language) : t('signup', language)}

@@ -89,7 +89,7 @@ const WritePage: React.FC = () => {
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-stone-100 dark:border-stone-800">
             <p className="text-sm text-stone-400 italic">
-              Your work will be preserved in the digital sanctuary of VetriZen.
+              Your work will be preserved in the digital sanctuary of IyalTamil.
             </p>
             <button
               type="submit"

@@ -1,6 +1,6 @@
 # Logo image
 
-Place your VetriZen logo here as **logo.png**.
+Place your IyalTamil logo here as **logo.png**.
 
 The logo is used in:
 - Header (top navigation)

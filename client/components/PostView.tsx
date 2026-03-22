@@ -65,7 +65,7 @@ export const PostView: React.FC<PostViewProps> = ({ post, onNavigate, language, 
 
   return (
     <article className="max-w-4xl mx-auto pt-4 pb-32 px-4 animate-subtle-fade bg-bone dark:bg-stone-950">
-      <SEO title={`${post.title} | VetriZen`} description={post.content.substring(0, 160)} />
+      <SEO title={`${post.title} | IyalTamil`} description={post.content.substring(0, 160)} />
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
         <Breadcrumbs items={breadcrumbs} />

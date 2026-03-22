@@ -30,7 +30,7 @@ export const PotikalView: React.FC<PotikalViewProps> = ({ competitions, language
   return (
     <div className="max-w-6xl mx-auto pb-20 animate-subtle-fade">
       <SEO 
-        title={`${t('competitions', language)} | VetriZen`}
+        title={`${t('competitions', language)} | IyalTamil`}
         description="Participate in Tamil literary competitions, win prizes, and showcase your talent."
         keywords={['Tamil Competitions', 'Poetry Contest', 'Story Writing', 'Awards']}
       />

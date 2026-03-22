@@ -180,7 +180,7 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={(e) => { e.stopPropagation(); onNavigate('home'); }}
           >
               <div className={`transform group-hover:rotate-[15deg] transition-all duration-500 ease-out flex-shrink-0 overflow-hidden rounded-full ${isScrolled ? 'w-10 h-10' : 'w-14 h-14'}`}>
-                  <img src="/images/IyalLogo.png" alt="Iyal" className="w-full h-full object-cover object-center" />
+                  <img src="/images/logo.png" alt="Iyal" className="w-full h-full object-cover object-center" />
               </div>
               <div className="flex flex-col">
                 <h1 className={`font-black font-sans tracking-tight transition-all duration-500 leading-none ${isScrolled ? 'text-xl md:text-2xl' : 'text-2xl md:text-3xl'}`}>
