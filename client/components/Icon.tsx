@@ -2,7 +2,7 @@
 import React from 'react';
 
 interface IconProps {
-  name: 'like' | 'comment' | 'share' | 'google' | 'close' | 'home' | 'pen' | 'book' | 'library' | 'plus' | 'collapse' | 'expand' | 'login' | 'language' | 'sun' | 'moon' | 'search' | 'document' | 'arrow-up' | 'trophy' | 'newspaper' | 'book-open' | 'scroll' | 'chevron-left' | 'chevron-right' | 'volume-up' | 'volume-off' | 'quote' | 'school' | 'star' | 'lightning' | 'landmark' | 'linkedin' | 'instagram' | 'youtube' | 'facebook' | 'twitter' | 'edit' | 'collection' | 'archive' | 'bulb' | 'settings' | 'calendar' | 'printer' | 'leaf';
+  name: 'like' | 'comment' | 'share' | 'google' | 'close' | 'home' | 'pen' | 'book' | 'library' | 'plus' | 'collapse' | 'expand' | 'login' | 'language' | 'sun' | 'moon' | 'search' | 'document' | 'arrow-up' | 'trophy' | 'newspaper' | 'book-open' | 'scroll' | 'chevron-left' | 'chevron-right' | 'volume-up' | 'volume-off' | 'quote' | 'school' | 'star' | 'lightning' | 'landmark' | 'linkedin' | 'instagram' | 'youtube' | 'facebook' | 'twitter' | 'edit' | 'collection' | 'archive' | 'bulb' | 'settings' | 'calendar' | 'printer' | 'leaf' | 'trash';
   isFilled?: boolean;
 }
 
@@ -166,6 +166,11 @@ export const Icon: React.FC<IconProps> = ({ name, isFilled = false }) => {
       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 2C12 2 12 10 3 12C3 12 10 12 12 21C12 21 12 13 21 11C21 11 14 11 12 2Z" />
       </svg>
+    ),
+    trash: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+        </svg>
     ),
     linkedin: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>,
     instagram: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.245 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.332 2.633-1.308 3.608-.975.975-2.242 1.245-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.332-3.608-1.308-.975-.975-1.245-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.245 3.608-1.308 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.058-1.281.072-1.689.072-4.947s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.28-.058-1.689-.072-4.948-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>,

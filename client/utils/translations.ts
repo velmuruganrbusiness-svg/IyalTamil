@@ -60,6 +60,7 @@ export const translations = {
   saveChanges: { ta: 'மாற்றங்களை சேமி', en: 'Save Changes' },
   submitComment: { ta: 'கருத்தை பதிவு செய்', en: 'Submit Comment' },
   editCreation: { ta: 'படைப்பைத் திருத்து', en: 'Edit Creation' },
+  deletePost: { ta: 'நீக்கு', en: 'Delete' },
   
   // Classics / Wisdom
   classics: { ta: 'ஞானம்', en: 'Wisdom' },

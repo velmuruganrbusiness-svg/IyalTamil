@@ -148,6 +148,18 @@ const App: React.FC = () => {
     setPosts(prev => prev.map(p => p._id === updated._id ? updated : p));
   };
 
+  const handlePostDelete = async (postId: string) => {
+    if (!currentUser) return;
+    if (!window.confirm('நிச்சயமாக இந்தப் பதிவை நீக்க வேண்டுமா?')) return;
+    try {
+      await api.deletePost(postId, String(currentUser.id));
+      setPosts(prev => prev.filter(p => p._id !== postId));
+      handleNavigate('home');
+    } catch (err: any) {
+      alert(err.message || 'பதிவை நீக்குவதில் சிக்கல் ஏற்பட்டது.');
+    }
+  };
+
   const toggleLanguage = () => setLanguage(l => l === 'ta' ? 'en' : 'ta');
   const toggleTheme = () => setTheme(t => t === 'light' ? 'dark' : 'light');
 
@@ -163,7 +175,7 @@ const App: React.FC = () => {
       case 'post':
         const post = posts.find(p => p._id === selectedPostId); // Changed from p.id to p._id
         return post
-          ? <PostView post={post} onNavigate={handleNavigate} language={language} currentUser={currentUser} />
+          ? <PostView post={post} onNavigate={handleNavigate} language={language} currentUser={currentUser} onDelete={handlePostDelete} />
           : <div className="text-center p-20 font-serif italic text-stone-400">படைப்பு காணப்படவில்லை</div>;
       case 'post-edit':
         const editPost = posts.find(p => p._id === selectedPostId) ?? null;

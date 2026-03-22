@@ -84,6 +84,23 @@ export const api = {
     }
   },
 
+  // Delete a post (ownership verified server-side)
+  deletePost: async (id: string, userId: string): Promise<boolean> => {
+    const response = await fetch(`${API_URL}/posts/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({ userId }),
+    });
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({ message: 'Failed to delete post' }));
+      throw new Error(err.message || 'Failed to delete post');
+    }
+    return true;
+  },
+
   // Get comments for a post
   getComments: async (postId: string): Promise<CommentResponse[]> => {
     try {

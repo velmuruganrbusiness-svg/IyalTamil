@@ -14,9 +14,10 @@ interface PostViewProps {
   onNavigate: (page: 'home' | 'category' | 'post' | 'author' | 'post-edit', id?: string | null, category?: Category | null) => void;
   language: Language;
   currentUser?: User | null;
+  onDelete?: (postId: string) => void;
 }
 
-export const PostView: React.FC<PostViewProps> = ({ post, onNavigate, language, currentUser }) => {
+export const PostView: React.FC<PostViewProps> = ({ post, onNavigate, language, currentUser, onDelete }) => {
   const [likes, setLikes] = useState(post.likes);
   const [isLiked, setIsLiked] = useState(false);
   const [showCopied, setShowCopied] = useState(false);
@@ -137,14 +138,24 @@ export const PostView: React.FC<PostViewProps> = ({ post, onNavigate, language, 
             </button>
 
             {currentUser && String(post.author?.id) === String(currentUser.id) && (
-              <button
-                onClick={() => onNavigate('post-edit', post._id)}
-                className="flex items-center gap-2 text-xs font-bold text-stone-600 dark:text-stone-400 hover:text-zen-green transition-all duration-300"
-                title={t('editCreation', language)}
-              >
-                <Icon name="edit" />
-                <span className="tracking-widest uppercase">{t('editCreation', language)}</span>
-              </button>
+              <>
+                <button
+                  onClick={() => onNavigate('post-edit', post._id)}
+                  className="flex items-center gap-2 text-xs font-bold text-stone-600 dark:text-stone-400 hover:text-zen-green transition-all duration-300"
+                  title={t('editCreation', language)}
+                >
+                  <Icon name="edit" />
+                  <span className="tracking-widest uppercase">{t('editCreation', language)}</span>
+                </button>
+                <button
+                  onClick={() => onDelete?.(post._id)}
+                  className="flex items-center gap-2 text-xs font-bold text-stone-600 dark:text-stone-400 hover:text-zen-terracotta transition-all duration-300"
+                  title={t('deletePost', language)}
+                >
+                  <Icon name="trash" />
+                  <span className="tracking-widest uppercase">{t('deletePost', language)}</span>
+                </button>
+              </>
             )}
         </div>
       </div>

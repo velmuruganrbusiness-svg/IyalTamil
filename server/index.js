@@ -103,7 +103,57 @@ app.put('/api/posts/:id', async (req, res) => {
   }
 });
 
-// 3d. Comments - Get by post
+// 3c-2. Posts - Delete (with ownership check)
+app.delete('/api/posts/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid post ID" });
+    }
+    const post = await Post.findById(id);
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    const postAuthorId = String(post.author._id || post.author.id);
+    if (postAuthorId !== String(req.body.userId)) {
+      return res.status(403).json({ message: "You are not the owner of this post" });
+    }
+
+    await Post.findByIdAndDelete(id);
+    await Comment.deleteMany({ postId: id });
+
+    res.json({ message: "Post deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting post", details: err.message });
+  }
+});
+
+// 3d. Posts - Delete (author only)
+app.delete('/api/posts/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid post ID" });
+    }
+
+    const post = await Post.findById(id);
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    const { userId } = req.body;
+    const isOwner = String(post.author._id || post.author.id) === String(userId);
+    if (!isOwner) {
+      return res.status(403).json({ message: "Not authorized to delete this post" });
+    }
+
+    await Post.findByIdAndDelete(id);
+    await Comment.deleteMany({ postId: id });
+
+    res.json({ message: "Post deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting post", details: err.message });
+  }
+});
+
+// 3e. Comments - Get by post
 app.get('/api/posts/:id/comments', async (req, res) => {
   try {
     const comments = await Comment.find({ postId: req.params.id })

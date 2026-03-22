@@ -165,7 +165,7 @@ export const Home: React.FC<HomeProps> = ({
       <SEO title={pageTitle} description={pageDescription} />
 
       <div className={`w-full ${isPoemCategory ? 'max-w-[800px]' : 'max-w-4xl'} px-4 pt-4 pb-32`}>
-        {breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}
+        {breadcrumbs.length > 0 && <div className="mb-8"><Breadcrumbs items={breadcrumbs} /></div>}
 
         {isRootHome && (
           <div className="text-center pt-6 animate-subtle-fade">
@@ -181,38 +181,23 @@ export const Home: React.FC<HomeProps> = ({
           </div>
         )}
 
-        {category && (
-            <div className={`mb-12 px-2 animate-subtle-fade ${isPoemCategory ? 'max-w-xl mx-auto text-center' : 'max-w-2xl mx-auto'}`}>
-              <div className="relative group">
-                  <input
-                      type="text"
-                      className={`block w-full pl-12 pr-4 py-3 border border-stone-200 dark:border-stone-800 rounded-full leading-5 bg-white dark:bg-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-zen-green/10 focus:border-zen-green/30 transition-all text-stone-800 dark:text-stone-300 ${isPoemCategory ? 'text-center' : ''}`}
-                      placeholder={isPoemCategory ? "கவிதையைத் தேடு..." : t('searchIn', language).replace('{category}', category)}
-                      value={searchQuery}
-                      onChange={(e) => onSearch(e.target.value)}
-                  />
-                  <div className={`absolute inset-y-0 ${isPoemCategory ? 'left-6' : 'left-0 pl-4'} flex items-center pointer-events-none text-stone-400 group-focus-within:text-zen-green transition-colors`}>
-                      <Icon name="search" />
-                  </div>
+        {false && category && isPoemCategory && (
+            <div className="mb-12 px-2 animate-subtle-fade max-w-xl mx-auto text-center">
+              <div className="flex flex-wrap justify-center gap-2 animate-subtle-fade">
+                  {['இயற்கை', 'காதல்', 'வாழ்வியல்', 'ஆன்மீகம்'].map((chip) => (
+                      <button
+                          key={chip}
+                          onClick={() => setSubFilter(subFilter === chip ? null : chip)}
+                          className={`px-5 py-1.5 rounded-full text-[13px] font-bold transition-all duration-300 border ${
+                              subFilter === chip 
+                              ? 'bg-zen-green border-zen-green text-white shadow-md' 
+                              : 'bg-transparent border-zen-green/30 text-zen-green hover:border-zen-green'
+                          }`}
+                      >
+                          {chip}
+                      </button>
+                  ))}
               </div>
-
-              {isPoemCategory && (
-                <div className="flex flex-wrap justify-center gap-2 mt-6 animate-subtle-fade">
-                    {['இயற்கை', 'காதல்', 'வாழ்வியல்', 'ஆன்மீகம்'].map((chip) => (
-                        <button
-                            key={chip}
-                            onClick={() => setSubFilter(subFilter === chip ? null : chip)}
-                            className={`px-5 py-1.5 rounded-full text-[13px] font-bold transition-all duration-300 border ${
-                                subFilter === chip 
-                                ? 'bg-zen-green border-zen-green text-white shadow-md' 
-                                : 'bg-transparent border-zen-green/30 text-zen-green hover:border-zen-green'
-                            }`}
-                        >
-                            {chip}
-                        </button>
-                    ))}
-                </div>
-              )}
             </div>
         )}
         
