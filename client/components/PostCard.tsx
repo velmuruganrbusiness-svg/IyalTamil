@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import type { Post, User } from '../types';
 import { Icon } from './Icon';
 
@@ -8,21 +8,21 @@ interface PostCardProps {
   onNavigate: (page: 'post' | 'author', id: string) => void;
   currentUser?: User | null;
   variant?: 'default' | 'minimal' | 'related';
+  onToggleLike?: (postId: string) => void;
+  onLoginRequired?: () => void;
 }
 
-export const PostCard: React.FC<PostCardProps> = ({ post, onNavigate, currentUser, variant = 'default' }) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(post.likes);
+export const PostCard: React.FC<PostCardProps> = ({ post, onNavigate, currentUser, variant = 'default', onToggleLike, onLoginRequired }) => {
+  const likedBy = post.likedBy || [];
+  const isLiked = currentUser ? likedBy.includes(String(currentUser.id)) : false;
 
   const handleLike = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (isLiked) {
-        setLikeCount(prev => prev - 1);
-        setIsLiked(false);
-    } else {
-        setLikeCount(prev => prev + 1);
-        setIsLiked(true);
+    if (!currentUser) {
+      onLoginRequired?.();
+      return;
     }
+    onToggleLike?.(post._id);
   };
 
   const handleAuthorClick = (e: React.MouseEvent) => {
@@ -72,17 +72,39 @@ export const PostCard: React.FC<PostCardProps> = ({ post, onNavigate, currentUse
                 </p>
             </div>
             
-            <div className="flex items-center gap-2 mt-3 text-[14px] text-[#555555] dark:text-stone-400">
-                <span 
-                    className="font-medium hover:text-[#5A7D5B] hover:underline hover:decoration-[#5A7D5B]/30 transition-all duration-300 cursor-pointer uppercase tracking-[0.12em]"
-                    onClick={handleAuthorClick}
-                >
-                    {post.author.name}
-                </span>
-                <span className="opacity-40 font-sans text-xs select-none">•</span>
-                <span className="font-normal uppercase tracking-[0.12em]">
-                    {formattedDate}
-                </span>
+            <div className="flex items-center justify-between mt-3">
+                <div className="flex items-center gap-3">
+                    <img 
+                        src={post.author.avatarUrl} 
+                        alt={post.author.name} 
+                        className="w-8 h-8 rounded-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500" 
+                    />
+                    <div className="flex items-center gap-2 text-[14px] text-[#555555] dark:text-stone-400">
+                        <span 
+                            className="font-medium hover:text-[#5A7D5B] hover:underline hover:decoration-[#5A7D5B]/30 transition-all duration-300 cursor-pointer uppercase tracking-[0.12em]"
+                            onClick={handleAuthorClick}
+                        >
+                            {post.author.name}
+                        </span>
+                        <span className="opacity-40 font-sans text-xs select-none">•</span>
+                        <span className="font-normal uppercase tracking-[0.12em]">
+                            {formattedDate}
+                        </span>
+                    </div>
+                </div>
+
+                <div className="flex items-center gap-6 text-stone-400 text-xs">
+                    <button 
+                        onClick={handleLike}
+                        className={`transition-colors ${isLiked ? 'text-zen-terracotta' : 'hover:text-zen-green'}`}
+                    >
+                        <Icon name="like" isFilled={isLiked} />
+                    </button>
+                    <div className="flex items-center gap-1.5">
+                        <Icon name="comment" />
+                        <span className="font-bold">{post.commentCount ?? 0}</span>
+                    </div>
+                </div>
             </div>
         </article>
       );
@@ -134,14 +156,13 @@ export const PostCard: React.FC<PostCardProps> = ({ post, onNavigate, currentUse
         <div className="flex items-center gap-6 text-stone-400 text-xs">
             <button 
                 onClick={handleLike}
-                className={`flex items-center gap-1.5 transition-colors ${isLiked ? 'text-zen-terracotta' : 'hover:text-zen-green'}`}
+                className={`transition-colors ${isLiked ? 'text-zen-terracotta' : 'hover:text-zen-green'}`}
             >
                 <Icon name="like" isFilled={isLiked} />
-                <span className="font-bold">{likeCount}</span>
             </button>
             <div className="flex items-center gap-1.5">
                 <Icon name="comment" />
-                <span className="font-bold">{post.comments.length}</span>
+                <span className="font-bold">{post.commentCount ?? 0}</span>
             </div>
         </div>
       </div>

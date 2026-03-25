@@ -21,10 +21,9 @@ const PostSchema = new mongoose.Schema({
     type: String,
     default: "கவிதை"
   },
-  // Added likes field to match the frontend Post type
-  likes: {
-    type: Number,
-    default: 0
+  likedBy: {
+    type: [String],
+    default: []
   },
   // Added comments field to match the frontend Post type
   comments: {

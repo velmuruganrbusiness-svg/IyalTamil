@@ -43,6 +43,25 @@ mongoose.connect(MONGODB_URI, {
 });
 
 /**
+ * Helpers
+ */
+async function attachCommentCounts(posts) {
+  if (!posts.length) return posts;
+  const ids = posts.map(p => p._id);
+  const counts = await Comment.aggregate([
+    { $match: { postId: { $in: ids } } },
+    { $group: { _id: '$postId', count: { $sum: 1 } } }
+  ]);
+  const countMap = {};
+  counts.forEach(c => { countMap[String(c._id)] = c.count; });
+  return posts.map(p => {
+    const obj = p.toJSON ? p.toJSON() : { ...p };
+    obj.commentCount = countMap[String(obj._id)] || 0;
+    return obj;
+  });
+}
+
+/**
  * API ROUTES
  */
 
@@ -55,7 +74,8 @@ app.get('/api/health', (req, res) => {
 app.get('/api/posts', async (req, res) => {
   try {
     const posts = await Post.find().sort({ createdAt: -1 });
-    res.json(posts);
+    const withCounts = await attachCommentCounts(posts);
+    res.json(withCounts);
   } catch (err) {
     res.status(500).json({ message: "Error fetching posts" });
   }
@@ -77,7 +97,8 @@ app.get('/api/posts/:id', async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (!post) return res.status(404).json({ message: "Post not found" });
-    res.json(post);
+    const [withCount] = await attachCommentCounts([post]);
+    res.json(withCount);
   } catch (err) {
     res.status(500).json({ message: "Error fetching post", details: err.message });
   }
@@ -127,33 +148,50 @@ app.delete('/api/posts/:id', async (req, res) => {
   }
 });
 
-// 3d. Posts - Delete (author only)
-app.delete('/api/posts/:id', async (req, res) => {
+// 3e. Posts - Toggle Like
+app.post('/api/posts/:id/like', async (req, res) => {
   try {
     const { id } = req.params;
+    const { userId } = req.body;
     if (!id || !mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Invalid post ID" });
+    }
+    if (!userId) {
+      return res.status(400).json({ message: "userId is required" });
     }
 
     const post = await Post.findById(id);
     if (!post) return res.status(404).json({ message: "Post not found" });
 
-    const { userId } = req.body;
-    const isOwner = String(post.author._id || post.author.id) === String(userId);
-    if (!isOwner) {
-      return res.status(403).json({ message: "Not authorized to delete this post" });
+    const uid = String(userId);
+    const likedBy = post.likedBy || [];
+    const alreadyLiked = likedBy.includes(uid);
+
+    if (alreadyLiked) {
+      post.likedBy = likedBy.filter(x => x !== uid);
+    } else {
+      post.likedBy = [...likedBy, uid];
     }
+    await post.save();
 
-    await Post.findByIdAndDelete(id);
-    await Comment.deleteMany({ postId: id });
-
-    res.json({ message: "Post deleted successfully" });
+    res.json({ liked: !alreadyLiked, likeCount: post.likedBy.length, likedBy: post.likedBy });
   } catch (err) {
-    res.status(500).json({ message: "Error deleting post", details: err.message });
+    res.status(500).json({ message: "Error toggling like", details: err.message });
   }
 });
 
-// 3e. Comments - Get by post
+// 3f. Favorites - Get posts liked by a user
+app.get('/api/favorites/:userId', async (req, res) => {
+  try {
+    const posts = await Post.find({ likedBy: req.params.userId }).sort({ createdAt: -1 }).lean();
+    const withCounts = await attachCommentCounts(posts);
+    res.json(withCounts);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching favorites", details: err.message });
+  }
+});
+
+// 3g. Comments - Get by post
 app.get('/api/posts/:id/comments', async (req, res) => {
   try {
     const comments = await Comment.find({ postId: req.params.id })
@@ -228,7 +266,8 @@ app.post('/api/auth/login', async (req, res) => {
 app.get('/api/posts/author/:userId', async (req, res) => {
   try {
     const posts = await Post.find({ 'author.id': req.params.userId }).lean();
-    res.json(posts);
+    const withCounts = await attachCommentCounts(posts);
+    res.json(withCounts);
   } catch (err) {
     res.status(500).json({ message: "Error fetching user posts", details: err.message });
   }

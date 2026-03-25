@@ -8,6 +8,7 @@ import { ClassicsView } from './components/ClassicsView';
 import { PotikalView } from './components/PotikalView';
 import { TamilKarkaView } from './components/TamilKarkaView';
 import { LoginModal } from './components/LoginModal';
+import { FavoritesPage } from './components/FavoritesPage';
 import { Header } from './components/Header';
 import { api } from './services/api';
 import { mockApi } from './services/mockApi';
@@ -15,7 +16,7 @@ import { Icon } from './components/Icon';
 import type { Post, User, ClassicalWork, Category, Competition } from './types';
 import type { Language } from './utils/translations';
 
-type Page = 'home' | 'post' | 'post-edit' | 'editor' | 'classics' | 'category' | 'potikal' | 'karka' | 'author';
+type Page = 'home' | 'post' | 'post-edit' | 'editor' | 'classics' | 'category' | 'potikal' | 'karka' | 'author' | 'favorites';
 type Theme = 'light' | 'dark';
 
 const App: React.FC = () => {
@@ -123,7 +124,7 @@ const App: React.FC = () => {
     localStorage.removeItem('user');
   };
 
-  const handlePostSubmit = async (newPost: Omit<Post, '_id' | 'author' | 'likes' | 'comments' | 'createdAt' | '__v'>) => {
+  const handlePostSubmit = async (newPost: Omit<Post, '_id' | 'author' | 'likedBy' | 'comments' | 'createdAt' | '__v'>) => {
     if (!currentUser) {
       setShowLoginModal(true);
       return;
@@ -160,6 +161,29 @@ const App: React.FC = () => {
     }
   };
 
+  const handleToggleLike = async (postId: string) => {
+    if (!currentUser) {
+      setShowLoginModal(true);
+      return;
+    }
+    try {
+      const result = await api.toggleLike(postId, String(currentUser.id));
+      setPosts(prev => prev.map(p =>
+        p._id === postId ? { ...p, likedBy: result.likedBy } : p
+      ));
+    } catch (err: any) {
+      console.error('Toggle like error:', err.message);
+    }
+  };
+
+  const handleCommentAdded = (postId: string) => {
+    setPosts(prev => prev.map(p =>
+      p._id === postId ? { ...p, commentCount: (p.commentCount ?? 0) + 1 } : p
+    ));
+  };
+
+  const handleLoginRequired = () => setShowLoginModal(true);
+
   const toggleLanguage = () => setLanguage(l => l === 'ta' ? 'en' : 'ta');
   const toggleTheme = () => setTheme(t => t === 'light' ? 'dark' : 'light');
 
@@ -175,7 +199,7 @@ const App: React.FC = () => {
       case 'post':
         const post = posts.find(p => p._id === selectedPostId); // Changed from p.id to p._id
         return post
-          ? <PostView post={post} onNavigate={handleNavigate} language={language} currentUser={currentUser} onDelete={handlePostDelete} />
+          ? <PostView post={post} onNavigate={handleNavigate} language={language} currentUser={currentUser} onDelete={handlePostDelete} onToggleLike={handleToggleLike} onLoginRequired={handleLoginRequired} onCommentAdded={handleCommentAdded} />
           : <div className="text-center p-20 font-serif italic text-stone-400">படைப்பு காணப்படவில்லை</div>;
       case 'post-edit':
         const editPost = posts.find(p => p._id === selectedPostId) ?? null;
@@ -208,6 +232,8 @@ const App: React.FC = () => {
             onSearch={handleSearch}
             currentUser={currentUser}
             isLoading={loading}
+            onToggleLike={handleToggleLike}
+            onLoginRequired={handleLoginRequired}
           />
         );
       case 'author':
@@ -228,6 +254,19 @@ const App: React.FC = () => {
             currentUser={currentUser}
             isLoading={loading}
             selectedAuthor={authorDetails}
+            onToggleLike={handleToggleLike}
+            onLoginRequired={handleLoginRequired}
+          />
+        );
+      case 'favorites':
+        return (
+          <FavoritesPage
+            posts={posts.filter(p => currentUser && (p.likedBy || []).includes(String(currentUser.id)))}
+            onNavigate={handleNavigate}
+            language={language}
+            currentUser={currentUser}
+            onToggleLike={handleToggleLike}
+            onLoginRequired={handleLoginRequired}
           />
         );
       case 'home':
@@ -241,6 +280,8 @@ const App: React.FC = () => {
             onSearch={handleSearch}
             currentUser={currentUser}
             isLoading={loading}
+            onToggleLike={handleToggleLike}
+            onLoginRequired={handleLoginRequired}
           />
         );
     }

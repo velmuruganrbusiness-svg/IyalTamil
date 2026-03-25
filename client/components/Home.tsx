@@ -18,6 +18,8 @@ interface HomeProps {
   currentUser?: User | null;
   isLoading?: boolean;
   selectedAuthor?: User;
+  onToggleLike?: (postId: string) => void;
+  onLoginRequired?: () => void;
 }
 
 const VisionSection: React.FC<{ onNavigate: (page: any) => void }> = ({ onNavigate }) => (
@@ -118,7 +120,9 @@ export const Home: React.FC<HomeProps> = ({
     onSearch, 
     currentUser,
     isLoading = false,
-    selectedAuthor
+    selectedAuthor,
+    onToggleLike,
+    onLoginRequired
 }) => {
     const [subFilter, setSubFilter] = useState<string | null>(null);
     
@@ -230,6 +234,8 @@ export const Home: React.FC<HomeProps> = ({
                                     onNavigate={onNavigate} 
                                     currentUser={currentUser}
                                     variant={isPoemCategory ? 'minimal' : 'default'}
+                                    onToggleLike={onToggleLike}
+                                    onLoginRequired={onLoginRequired}
                                   />
                               </div>
                           ))}

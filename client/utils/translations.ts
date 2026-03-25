@@ -61,7 +61,9 @@ export const translations = {
   submitComment: { ta: 'கருத்தை பதிவு செய்', en: 'Submit Comment' },
   editCreation: { ta: 'படைப்பைத் திருத்து', en: 'Edit Creation' },
   deletePost: { ta: 'நீக்கு', en: 'Delete' },
-  
+  favorites: { ta: 'என் விருப்பங்கள்', en: 'My Favorites' },
+  loginToLike: { ta: 'விருப்பம் சேர்க்க உள்நுழையவும்', en: 'Login to like' },
+
   // Classics / Wisdom
   classics: { ta: 'ஞானம்', en: 'Wisdom' },
   participate: { ta: 'பங்கேற்க', en: 'Participate' },

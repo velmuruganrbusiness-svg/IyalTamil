@@ -15,11 +15,15 @@ interface PostViewProps {
   language: Language;
   currentUser?: User | null;
   onDelete?: (postId: string) => void;
+  onToggleLike?: (postId: string) => void;
+  onLoginRequired?: () => void;
+  onCommentAdded?: (postId: string) => void;
 }
 
-export const PostView: React.FC<PostViewProps> = ({ post, onNavigate, language, currentUser, onDelete }) => {
-  const [likes, setLikes] = useState(post.likes);
-  const [isLiked, setIsLiked] = useState(false);
+export const PostView: React.FC<PostViewProps> = ({ post, onNavigate, language, currentUser, onDelete, onToggleLike, onLoginRequired, onCommentAdded }) => {
+  const likedBy = post.likedBy || [];
+  const isLiked = currentUser ? likedBy.includes(String(currentUser.id)) : false;
+  const likes = likedBy.length;
   const [showCopied, setShowCopied] = useState(false);
   const [relatedPosts, setRelatedPosts] = useState<Post[]>([]);
   
@@ -36,8 +40,11 @@ export const PostView: React.FC<PostViewProps> = ({ post, onNavigate, language, 
   }, [post._id, post.category]);
 
   const handleLike = () => {
-    if (isLiked) { setLikes(likes - 1); setIsLiked(false); } 
-    else { setLikes(likes + 1); setIsLiked(true); }
+    if (!currentUser) {
+      onLoginRequired?.();
+      return;
+    }
+    onToggleLike?.(post._id);
   };
 
   const handleShare = async () => {
@@ -160,7 +167,7 @@ export const PostView: React.FC<PostViewProps> = ({ post, onNavigate, language, 
         </div>
       </div>
 
-      <CommentsSection postId={post._id} language={language} currentUser={currentUser} />
+      <CommentsSection postId={post._id} language={language} currentUser={currentUser} onCommentAdded={() => onCommentAdded?.(post._id)} />
 
       {relatedPosts.length > 0 && (
           <div className="mt-16 border-t border-stone-200 dark:border-stone-800 pt-16">
@@ -173,7 +180,10 @@ export const PostView: React.FC<PostViewProps> = ({ post, onNavigate, language, 
                       key={p._id} 
                       post={p} 
                       onNavigate={(page, id) => onNavigate(page as any, id)}
-                      variant="related" 
+                      variant="related"
+                      currentUser={currentUser}
+                      onToggleLike={onToggleLike}
+                      onLoginRequired={onLoginRequired}
                     />
                   ))}
               </div>

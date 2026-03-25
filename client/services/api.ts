@@ -101,6 +101,29 @@ export const api = {
     return true;
   },
 
+  // Toggle like on a post
+  toggleLike: async (postId: string, userId: string): Promise<{ liked: boolean; likeCount: number; likedBy: string[] }> => {
+    const response = await fetch(`${API_URL}/posts/${postId}/like`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId }),
+    });
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({ message: 'Failed to toggle like' }));
+      throw new Error(err.message || 'Failed to toggle like');
+    }
+    return await response.json();
+  },
+
+  // Get user's favorited posts
+  getFavorites: async (userId: string): Promise<Post[]> => {
+    const response = await fetch(`${API_URL}/favorites/${userId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch favorites');
+    }
+    return await response.json();
+  },
+
   // Get comments for a post
   getComments: async (postId: string): Promise<CommentResponse[]> => {
     try {

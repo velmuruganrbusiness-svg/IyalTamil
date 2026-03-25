@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import type { User, Category } from '../types';
 import { Icon } from './Icon';
-import { t, Language } from '../utils/translations';
+import { t, translations, Language } from '../utils/translations';
 
 interface HeaderProps {
   currentUser: User | null;
@@ -146,6 +146,13 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
           <button
             type="button"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); onNavigate('favorites'); setUserMenuOpen(false); }}
+            className="w-full text-left px-5 py-3 text-[14px] text-[#2D2D2D] dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800/50 hover:text-zen-green transition-all duration-200 font-semibold border-l-2 border-transparent hover:border-zen-green/40"
+          >
+            {translations.favorites[language]}
+          </button>
+          <button
+            type="button"
             onClick={handleThemeClick}
             className="w-full text-left px-5 py-3 text-[14px] text-[#2D2D2D] dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800/50 hover:text-zen-green transition-all duration-200 font-semibold border-l-2 border-transparent hover:border-zen-green/40"
           >
@@ -278,6 +285,7 @@ export const Header: React.FC<HeaderProps> = ({
                         <div className="space-y-4">
                             <p className="text-xs font-bold text-stone-400 text-center">Logged in as {currentUser.name}</p>
                             <button type="button" onClick={(e) => { e.stopPropagation(); onNavigate('author', String(currentUser.id)); setIsMobileMenuOpen(false); }} className="w-full py-4 rounded-[8px] bg-stone-100 dark:bg-stone-900 text-[#2D2D2D] dark:text-bone font-bold text-sm">{language === 'ta' ? 'என் படைப்புகள்' : 'My Creations'}</button>
+                            <button type="button" onClick={(e) => { e.stopPropagation(); onNavigate('favorites'); setIsMobileMenuOpen(false); }} className="w-full py-4 rounded-[8px] bg-stone-100 dark:bg-stone-900 text-[#2D2D2D] dark:text-bone font-bold text-sm">{translations.favorites[language]}</button>
                             <button type="button" onClick={(e) => { e.stopPropagation(); onLogout(); setIsMobileMenuOpen(false); }} className="w-full py-4 rounded-[8px] bg-stone-100 dark:bg-stone-900 text-[#2D2D2D] dark:text-bone font-bold text-sm">{t('logout', language)}</button>
                         </div>
                     ) : (

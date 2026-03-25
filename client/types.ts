@@ -26,8 +26,9 @@ export interface Post {
     avatarUrl?: string;
   };
   category: string;
-  likes: number;
+  likedBy: string[];
   comments: any[];
+  commentCount: number;
   createdAt: string;
   __v?: number;
 }
