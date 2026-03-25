@@ -124,7 +124,7 @@ const App: React.FC = () => {
     localStorage.removeItem('user');
   };
 
-  const handlePostSubmit = async (newPost: Omit<Post, '_id' | 'author' | 'likedBy' | 'comments' | 'createdAt' | '__v'>) => {
+  const handlePostSubmit = async (newPost: Omit<Post, '_id' | 'author' | 'likedBy' | 'comments' | 'commentCount' | 'createdAt' | '__v'>) => {
     if (!currentUser) {
       setShowLoginModal(true);
       return;

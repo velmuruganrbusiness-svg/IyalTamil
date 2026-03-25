@@ -6,7 +6,7 @@ import { Icon } from './Icon';
 import { Breadcrumbs } from './Breadcrumbs';
 
 interface EditorProps {
-  onSubmit: (post: Omit<Post, '_id' | 'author' | 'likes' | 'comments' | 'createdAt'>) => Promise<void>;
+  onSubmit: (post: Omit<Post, '_id' | 'author' | 'likedBy' | 'comments' | 'commentCount' | 'createdAt'>) => Promise<void>;
   language: Language;
   onNavigate: (page: 'home') => void;
 }

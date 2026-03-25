@@ -5,15 +5,8 @@ import { aathichoodiData } from './AathichoodiMock';
 import { historyData } from './HistoryMock';
 
 // Aggregate all posts
-const mockPosts: Post[] = [
-  //...historyData
-].sort((a, b) => {
-    // 1. Get dates safely (If date is missing, assume it's from 1970)
-    const dateA = new Date(a.createdAt); 
-    const dateB = new Date(b.createdAt);
-
-    // 2. Compare them (B - A puts newest at the top)
-    return dateB.getTime() - dateA.getTime();
+const mockPosts: Post[] = ([] as Post[]).sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
 });   
 
 
