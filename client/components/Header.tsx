@@ -195,7 +195,7 @@ export const Header: React.FC<HeaderProps> = ({
                   <span className="text-zen-green">Tamil</span>
                 </h1>
                 <span className={`font-sans font-medium text-[#333333] dark:text-stone-400 transition-all duration-500 ${isScrolled ? 'text-[9px] tracking-[0.12em] mt-1' : 'text-[11px] tracking-[0.18em] mt-1.5'}`}>
-                  Success in Simplicity
+                  எழுத்தால் இணைவோம்
                 </span>
               </div>
           </div>
