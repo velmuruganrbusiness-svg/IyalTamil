@@ -25,7 +25,7 @@ interface HomeProps {
 const VisionSection: React.FC<{ onNavigate: (page: any) => void }> = ({ onNavigate }) => (
     <div className="text-center py-16 animate-subtle-fade px-4">
         <p className="text-lg md:text-xl font-tamil text-stone-700 dark:text-stone-300 leading-loose max-w-3xl mx-auto italic mb-10">
-            "இயல்தமிழ் (IyalTamil) என்பது ஒரு டிஜிட்டல் நந்தவனம். பரபரப்பான உலகில், அமைதியான சூழலில் படைப்புகளைப் படிக்கவும் பகிரவும் உருவாக்கப்பட்ட ஒரு தளம்."
+            "இயல் தமிழ் (IyalTamil) என்பது ஒரு டிஜிட்டல் நந்தவனம். பரபரப்பான உலகில், அமைதியான சூழலில் படைப்புகளைப் படிக்கவும் பகிரவும் உருவாக்கப்பட்ட ஒரு தளம்."
         </p>
         <button 
             onClick={() => onNavigate('classics')}
