@@ -187,14 +187,16 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={(e) => { e.stopPropagation(); onNavigate('home'); }}
           >
               <div className={`transform group-hover:rotate-[15deg] transition-all duration-500 ease-out flex-shrink-0 overflow-hidden rounded-full ${isScrolled ? 'w-10 h-10' : 'w-14 h-14'}`}>
-                  <img src="/images/logo.png" alt="Iyal" className="w-full h-full object-cover object-center" />
+                  <img src="/images/logo.png" alt="" className="w-full h-full object-cover object-center" aria-hidden />
               </div>
-              <div className="flex flex-col">
-                <h1 className={`font-black font-sans tracking-tight transition-all duration-500 leading-none ${isScrolled ? 'text-xl md:text-2xl' : 'text-2xl md:text-3xl'}`}>
-                  <span className="text-[#555555] dark:text-white">Iyal</span>
-                  <span className="text-zen-green">Tamil</span>
+              <div className="inline-flex min-w-0 flex-col items-stretch text-center">
+                <h1 className={`font-bold font-tamil tracking-tighter transition-all duration-500 leading-none ${isScrolled ? 'text-xl md:text-2xl' : 'text-2xl md:text-3xl'}`}>
+                  <span className="text-[#555555] dark:text-white">இயல்</span>
+                  <span className="text-zen-green">தமிழ்</span>
                 </h1>
-                <span className={`font-sans font-medium text-[#333333] dark:text-stone-400 transition-all duration-500 ${isScrolled ? 'text-[9px] tracking-[0.12em] mt-1' : 'text-[11px] tracking-[0.18em] mt-1.5'}`}>
+                <span
+                  className={`block w-full font-tamil font-medium tracking-normal text-stone-600 dark:text-stone-400 transition-all duration-500 leading-tight ${isScrolled ? 'text-[8.75px] mt-1' : 'text-[10px] md:text-[11px] mt-1.5'}`}
+                >
                   எழுத்தால் இணைவோம்
                 </span>
               </div>

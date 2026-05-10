@@ -8,6 +8,26 @@ export const translations = {
   login: { ta: 'உள்நுழை', en: 'Login' },
   logout: { ta: 'வெளியேறு', en: 'Logout' },
   about: { ta: 'எங்களைப் பற்றி', en: 'About Us' },
+  aboutIntro1: {
+    ta: 'இயல்தமிழ் (IyalTamil) தமிழ் எழுத்து மற்றும் இலக்கியத்தின் அமைதியான டிஜிட்டல் வெளியாகும்.',
+    en: 'IyalTamil is a calm digital space for Tamil writing and literature.',
+  },
+  aboutIntro2: {
+    ta: 'விளம்பரத் தடைகளற்ற பக்கங்கள், மெல்லிய வாசிப்பு — இவற்றை நேசிப்பவர்களுக்காகத் தயார் செய்யப்பட்ட தளம்.',
+    en: 'It is built for people who enjoy uncluttered pages and thoughtful, slow reading.',
+  },
+  aboutIntro3: {
+    ta: 'கவிதைகள், கதைகள், பொற்கால உரைகளும் ஞானமும் இங்கு ஒன்றுக்குள் அமைகின்றன.',
+    en: 'Poems, stories, classical texts, and wisdom come together here in one mindful place.',
+  },
+  aboutIntro4: {
+    ta: 'படைப்பாளர்களும் வாசகர்களும் எளிய, அமைதியான இடைவெளியில் சந்திக்க அர்ப்பணிக்கப்பட்டுள்ளோம்.',
+    en: 'We are dedicated to letting writers and readers meet in a simple, peaceful corner of the web.',
+  },
+  aboutIntro5: {
+    ta: 'எழுத்தால் இணைவோம் — தமிழ் வாசிப்பு மற்றும் படைப்புப் பயணத்தில் இயல்தமிழ் உறுதுணையாக இருக்கும்.',
+    en: 'Connecting through letters — IyalTamil supports your journey as you read and write in Tamil.',
+  },
   contact: { ta: 'தொடர்புக்கு', en: 'Contact' },
   terms: { ta: 'விதிமுறைகள்', en: 'Terms' },
   copyright: { ta: 'பதிப்புரிமை', en: 'Copyright' },
@@ -16,7 +36,7 @@ export const translations = {
   // Home
   wordOfTheDay: { ta: 'இன்றைய சொல்', en: 'Word of the Day' },
   meaning: { ta: 'பொருள்', en: 'Meaning' },
-  tagline: { ta: 'அமைதியில் ஒரு வெற்றி', en: 'Success in Simplicity' },
+  tagline: { ta: 'எழுத்தால் இணைவோம்', en: 'Connecting Through Letters' },
   subTagline: { ta: 'எழுத்துக்களின் அமைதிப்பரப்பு - IyalTamil', en: 'A Slow-Tech Sanctuary for Tamil Letters' },
   latestPosts: { ta: 'சமீபத்திய படைப்புகள்', en: 'Latest Works' },
   searchIn: { ta: '{category} இல் தேடுக', en: 'Search in {category}' },

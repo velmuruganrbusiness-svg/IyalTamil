@@ -9,6 +9,7 @@ import { PotikalView } from './components/PotikalView';
 import { TamilKarkaView } from './components/TamilKarkaView';
 import { LoginModal } from './components/LoginModal';
 import { FavoritesPage } from './components/FavoritesPage';
+import { AboutPage } from './components/AboutPage';
 import { Header } from './components/Header';
 import { api } from './services/api';
 import { mockApi } from './services/mockApi';
@@ -16,7 +17,7 @@ import { Icon } from './components/Icon';
 import type { Post, User, ClassicalWork, Category, Competition } from './types';
 import type { Language } from './utils/translations';
 
-type Page = 'home' | 'post' | 'post-edit' | 'editor' | 'classics' | 'category' | 'potikal' | 'karka' | 'author' | 'favorites';
+type Page = 'home' | 'post' | 'post-edit' | 'editor' | 'classics' | 'category' | 'potikal' | 'karka' | 'author' | 'favorites' | 'about';
 type Theme = 'light' | 'dark';
 
 const App: React.FC = () => {
@@ -269,6 +270,8 @@ const App: React.FC = () => {
             onLoginRequired={handleLoginRequired}
           />
         );
+      case 'about':
+        return <AboutPage language={language} onNavigate={handleNavigate} />;
       case 'home':
       default:
         return (
@@ -293,6 +296,8 @@ const App: React.FC = () => {
     }
   }, [page, currentUser]);
 
+  const isLandingHome = page === 'home' && !searchQuery;
+
   return (
     <div className="min-h-screen flex flex-col transition-colors duration-500 bg-[#FDFBF7] dark:bg-stone-950 selection:bg-zen-green/20">
       <Header
@@ -309,13 +314,17 @@ const App: React.FC = () => {
         selectedAuthorId={selectedAuthorId}
       />
 
-      <main className="flex-grow flex justify-center pt-[180px] md:pt-[216px] pb-12 px-4">
+      <main
+        className={`flex-grow flex justify-center pb-12 px-4 ${
+          isLandingHome ? 'pt-[164px] md:pt-[200px]' : 'pt-[180px] md:pt-[216px]'
+        }`}
+      >
         <div className="w-full max-w-5xl">
           {renderContent()}
         </div>
       </main>
 
-      <Footer language={language} onNavigate={handleNavigate} />
+      <Footer language={language} currentUser={currentUser} onNavigate={handleNavigate} />
 
       {showScrollTop && (
         <button

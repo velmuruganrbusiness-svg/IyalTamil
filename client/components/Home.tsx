@@ -22,23 +22,26 @@ interface HomeProps {
   onLoginRequired?: () => void;
 }
 
-const VisionSection: React.FC<{ onNavigate: (page: any) => void }> = ({ onNavigate }) => (
-    <div className="text-center py-16 animate-subtle-fade px-4">
-        <p className="text-lg md:text-xl font-tamil text-stone-700 dark:text-stone-300 leading-loose max-w-3xl mx-auto italic mb-10">
-            "இயல் தமிழ் (IyalTamil) என்பது ஒரு டிஜிட்டல் நந்தவனம். பரபரப்பான உலகில், அமைதியான சூழலில் படைப்புகளைப் படிக்கவும் பகிரவும் உருவாக்கப்பட்ட ஒரு தளம்."
-        </p>
-        <button 
-            onClick={() => onNavigate('classics')}
-            className="inline-block border-2 border-[#3E2723] dark:border-stone-200 text-[#3E2723] dark:text-stone-200 font-medium rounded-full px-8 py-2 hover:bg-[#2d5f2e] hover:text-white hover:border-[#2d5f2e] transition-all duration-300 active:scale-95"
-        >
-            பயணத்தைத் தொடங்க
-        </button>
-    </div>
+const VisionSection: React.FC<{ onNavigate: HomeProps['onNavigate'] }> = ({ onNavigate }) => (
+    <section className="pt-0 pb-8 md:pb-10 animate-subtle-fade px-4 w-full">
+        <div className="max-w-2xl md:max-w-3xl mx-auto text-center">
+            <p className="text-lg md:text-[1.35rem] font-tamil text-stone-600 dark:text-stone-400 leading-[1.85] md:leading-[1.9] italic mb-8 md:mb-9">
+                "இயல் தமிழ் (IyalTamil) என்பது ஒரு டிஜிட்டல் நந்தவனம். பரபரப்பான உலகில், அமைதியான சூழலில் படைப்புகளைப் படிக்கவும் பகிரவும் உருவாக்கப்பட்ட ஒரு தளம்."
+            </p>
+            <button
+                type="button"
+                onClick={() => onNavigate('category', null, 'கவிதை')}
+                className="inline-flex items-center justify-center rounded-full bg-zen-green px-9 py-3 text-sm font-bold text-white shadow-md shadow-zen-green/25 transition-all duration-300 hover:bg-zen-lightGreen hover:shadow-lg hover:shadow-zen-green/20 active:scale-[0.98]"
+            >
+                பயணத்தைத் தொடங்க
+            </button>
+        </div>
+    </section>
 );
 
 const FeaturePillars: React.FC = () => (
-    <div className="max-w-4xl mx-auto px-4 py-16 animate-subtle-fade">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 border-y border-stone-200/50 dark:border-stone-800/50 py-16">
+    <div className="max-w-4xl mx-auto px-4 pt-4 pb-12 md:pb-14 animate-subtle-fade">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 border-y border-stone-200/50 dark:border-stone-800/50 py-10 md:py-12">
             <div className="text-center md:text-left">
                 <h4 className="text-2xl font-bold font-tamil text-zen-green mb-4 leading-relaxed">தடையற்ற வாசிப்பு</h4>
                 <p className="text-stone-500 dark:text-stone-400 text-base leading-relaxed">
@@ -62,7 +65,7 @@ const FeaturePillars: React.FC = () => (
 );
 
 const WordOfTheDay: React.FC<{ language: Language }> = ({ language }) => (
-    <div className="py-16 flex justify-center animate-subtle-fade w-full">
+    <div id="home-word-of-the-day" className="py-16 flex justify-center animate-subtle-fade w-full scroll-mt-[200px]">
         <div className="bg-white dark:bg-stone-900 rounded-[2.5rem] p-8 md:p-14 shadow-[0_12px_45px_rgba(0,0,0,0.04)] text-center relative overflow-hidden group border border-stone-100 dark:border-stone-800 w-[90%] sm:w-[85%] md:max-w-3xl">
             <div className="flex items-center justify-center gap-2 mb-6 text-stone-500 dark:text-stone-500">
                 <Icon name="calendar" />
@@ -126,7 +129,7 @@ export const Home: React.FC<HomeProps> = ({
 }) => {
     const [subFilter, setSubFilter] = useState<string | null>(null);
     
-    let pageTitle = "IyalTamil - Success in Simplicity";
+    let pageTitle = `IyalTamil — ${t('tagline', language)}`;
     let pageDescription = t('subTagline', language);
 
     const isRootHome = !category && !searchQuery && !selectedAuthor;
@@ -172,13 +175,11 @@ export const Home: React.FC<HomeProps> = ({
         {breadcrumbs.length > 0 && <div className="mb-8"><Breadcrumbs items={breadcrumbs} /></div>}
 
         {isRootHome && (
-          <div className="text-center pt-6 animate-subtle-fade">
-            <h2 className="text-[2.5rem] font-medium font-tamil text-stone-900 dark:text-stone-100 leading-[1.3] mb-8">
-              {t('tagline', language)}
-            </h2>
-            <p className="text-xl md:text-2xl text-stone-500 dark:text-stone-500 font-serif italic max-w-2xl mx-auto leading-relaxed mb-12">
+          <div className="text-center pt-2 md:pt-3 animate-subtle-fade max-w-3xl mx-auto">
+            <h1 className="text-[2rem] md:text-[2.65rem] font-medium font-tamil text-stone-900 dark:text-stone-100 leading-[1.35] mb-5 md:mb-6">
               {t('subTagline', language)}
-            </p>
+            </h1>
+            <div className="w-20 h-px bg-stone-200/90 dark:bg-stone-700 mx-auto mb-6 md:mb-7" aria-hidden />
             <VisionSection onNavigate={onNavigate} />
             <WordOfTheDay language={language} />
             <FeaturePillars />
